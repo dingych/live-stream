@@ -1,0 +1,60 @@
+
+<template>
+  <div>
+    <input v-model="roomUrl" placeholder="  请输入您的直播间链接" style="line-height:4vh;width:60vw;font-weight: bold; border-radius: 8px; width: 18vw"/>
+    <button  style="line-height:4vh; border-radius: 8px;margin-left: 10px;opacity:0.8;background-color: #4ed54e;width: 3vw"
+             @click="dealUrl">查询</button>
+    <button v-show="!liveLock"  style="line-height:4vh;border-radius: 8px;opacity:0.8;margin-left:10px;background-color: rgb(201 62 165);width: 3vw"
+            @click="continueUrl">继续</button>
+  </div>
+</template>
+
+<script>
+import logo from "@/asserts/logo.png"
+import {getWssUrl} from "@/api/wssUrl";
+import {getRoomUrl, setRoomUrl} from "@/utils/storage";
+export default {
+  name: "search",
+  data(){
+    return {
+      logo:logo,
+      roomUrl:"",
+      liveLock:false
+    }
+  },
+  methods:{
+    dealUrl(){
+      if (!this.roomUrl){
+        alert("请输入您的直播间链接")
+        return
+      }
+      let param = {
+        roomUrl:this.roomUrl
+      }
+      getWssUrl(param).then((res)=>{
+        if(res.data.code===0){
+          this.$emit("search",res.data.data)
+          let room=  {roomUrl:this.roomUrl,wssUrl:res.data.data}
+          setRoomUrl(room)
+          // this.roomUrl=""
+        }else{
+          alert("系统异常:"+res.data.msg)
+        }
+      })
+    },
+
+    continueUrl(){
+      let res = getRoomUrl()
+      console.log("res:"+JSON.stringify(res))
+      if (res){
+        this.$emit("search",res.wssUrl)
+        this.liveLock=true
+      }
+    },
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
