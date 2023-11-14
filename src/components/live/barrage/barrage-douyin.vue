@@ -34,6 +34,7 @@ import AiReportGift from "@/components/report/ai-report-gift";
 import AiReportComment from "@/components/report/ai-report-comment";
 import AiReportNice from "@/components/report/ai-report-nice";
 import AiReportFocus from "@/components/report/ai-report-focus";
+import {getRoomUrl} from "@/utils/storage";
 
 export default {
 name: "barrage-douyin",
@@ -45,6 +46,8 @@ name: "barrage-douyin",
       websocket: null,
       openHeart:null,
       closeHeart:null,
+      roomUrl:null,
+      isInitClose:false,
       roomInfo:{
         count:"",
         totalUser:"",
@@ -57,7 +60,12 @@ name: "barrage-douyin",
   methods:{
 
     initWebSocket(wsUrl) {
-      this.websocket = new WebSocket(wsUrl);
+      if(this.websocket!=null&&this.websocket.isActive){
+        this.websocket.close();
+        this.isInitClose=true;
+      }
+      this.roomUrl = wsUrl.roomUrl
+      this.websocket = new WebSocket(wsUrl.wssUrl);
       this.websocket.binaryType = config.wsBinaryType;
       this.websocket.onmessage = this.webSocketMessage;
       this.websocket.onopen = this.webSocketOpen;
@@ -236,7 +244,9 @@ name: "barrage-douyin",
     webSocketClose(e) {
       console.log(e)
       console.log("---------------开始进行断网重连--------------")
-      this.coloseHeart =  setTimeout(this.initWebSocket, 5000);
+      if(!this.isInitClose){
+        setTimeout(this.initWebSocket( getRoomUrl().wssUrl), 5000);
+      }
     },
 
     heartBeatSend: function () {

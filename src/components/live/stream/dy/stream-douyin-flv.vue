@@ -20,7 +20,14 @@ export default {
   methods: {
 
     broadcast(url) {
-      this.videoUrl=url
+      if(this.flvPlayer){
+        this.destoryVideo()
+      }
+      if(url.flvUrl){
+        this.videoUrl=url.flvUrl
+      }else{
+        this.videoUrl=url.mu38Url
+      }
       if (this.videoUrl == ''){
         alert('请输入视频链接');
         return;

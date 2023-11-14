@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {getRoomUrl} from "@/utils/storage";
+import {getRoomInfo, getRoomUrl, setRoomInfo} from "@/utils/storage";
 import {getFlvUrl} from "@/api/streamUrl";
 import StreamDouyinFlv from "@/components/live/stream/dy/stream-douyin-flv";
 import StreamDouyinTitle from "@/components/live/stream/dy/stream-douyin-title";
@@ -39,17 +39,26 @@ name: "stream-douyin",
 
   },
   methods:{
-    initFlv(){
-      this.roomUrl = getRoomUrl().roomUrl
-      let param = {
-        roomUrl:this.roomUrl
-      }
-      getFlvUrl(param).then((res)=>{
-        if(res.data.code===0){
-          this.roomInfo = res.data.data
-          this.$refs.flv.broadcast(res.data.data.flvUrl)
+    initFlv(value){
+      if(value===0){
+        this.roomUrl = getRoomUrl().roomUrl
+        let param = {
+          roomUrl:this.roomUrl
         }
-      })
+        getFlvUrl(param).then((res)=>{
+          if(res.data.code===0){
+            this.roomInfo = res.data.data
+            setRoomInfo(this.roomInfo)
+            console.log("得到roomInfo:",JSON.stringify(this.roomInfo))
+            this.$refs.flv.broadcast(res.data.data)
+
+          }
+        })
+      }else{
+        this.roomInfo = getRoomInfo()
+        this.$refs.flv.broadcast(this.roomInfo)
+      }
+
     }
   }
 }

@@ -1,11 +1,12 @@
 
 <template>
-  <div>
+  <div style="display: flex;align-items: center;">
+    <a href="http://www.softworld.vip" target="_blank"><img :src="logo" width="45px"></a>
     <input v-model="roomUrl" placeholder="  请输入您的直播间链接" style="line-height:4vh;width:60vw;font-weight: bold; border-radius: 8px; width: 18vw"/>
     <button  style="line-height:4vh; border-radius: 8px;margin-left: 10px;opacity:0.8;background-color: #4ed54e;width: 3vw"
-             @click="dealUrl">查询</button>
+             @click="dealUrl()">查询</button>
     <button v-show="!liveLock"  style="line-height:4vh;border-radius: 8px;opacity:0.8;margin-left:10px;background-color: rgb(201 62 165);width: 3vw"
-            @click="continueUrl">继续</button>
+            @click="continueUrl()">继续</button>
   </div>
 </template>
 
@@ -33,9 +34,9 @@ export default {
       }
       getWssUrl(param).then((res)=>{
         if(res.data.code===0){
-          this.$emit("search",res.data.data)
           let room=  {roomUrl:this.roomUrl,wssUrl:res.data.data}
           setRoomUrl(room)
+          this.$emit("search",room,0)
           // this.roomUrl=""
         }else{
           alert("系统异常:"+res.data.msg)
@@ -45,9 +46,8 @@ export default {
 
     continueUrl(){
       let res = getRoomUrl()
-      console.log("res:"+JSON.stringify(res))
       if (res){
-        this.$emit("search",res.wssUrl)
+        this.$emit("search",res,1)
         this.liveLock=true
       }
     },

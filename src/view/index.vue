@@ -5,9 +5,7 @@
         <stream-douyin ref="stream"></stream-douyin>
         <barrage-douyin ref="barrage"></barrage-douyin>
     </div>
-    <div style="display: flex;justify-content: center;padding-top: 50px">
-      更多开源项目:<a href="https://github.com/wanyushu" target="_blank"><span style="color: #979191">https://github.com/wanyushu</span></a>
-    </div>
+    <live-footer></live-footer>
   </div>
 
 </template>
@@ -16,19 +14,24 @@
 import StreamDouyin from "@/components/live/stream/dy/stream-douyin";
 import BarrageDouyin from "@/components/live/barrage/barrage-douyin";
 import Search from "@/components/common/search";
-import AiReportRoom from "@/components/report/ai-report-room";
+import LiveFooter from "@/components/common/live-footer";
 export default {
 name: "index",
-  components: {AiReportRoom, Search, BarrageDouyin, StreamDouyin},
+  components: {LiveFooter, Search, BarrageDouyin, StreamDouyin},
   data(){
   return{
 
   }
   },
   methods:{
-    searchLive(wssUrl){
-      this.$refs.barrage.initWebSocket(wssUrl);
-      this.$refs.stream.initFlv()
+    searchLive(url,value){
+      this.$refs.barrage.initWebSocket(url);
+      if(value===0){
+        this.$refs.stream.initFlv(0)
+      }else{
+        this.$refs.stream.initFlv(1)
+      }
+
     }
   },
   mounted() {
