@@ -1,7 +1,8 @@
 # barrage-vue
 
 ## 项目页面截图
-![image](https://github.com/wanyushu/barrage-vue/assets/55966772/422b0e20-2ef2-4794-9594-feec39b6fb73)
+![image](https://github.com/wanyushu/live-stream/assets/55966772/58bde2b8-4653-477b-b586-3e8f0bd682a9)
+
 
 
 # 一. 项目部署
