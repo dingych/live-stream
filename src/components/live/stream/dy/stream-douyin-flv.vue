@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div >
     <div id="videoPlayer" style="display: flex;justify-content: center;">
       <video controls style="width:56vw;height: 56vh;"></video>
     </div>
@@ -37,12 +37,16 @@ export default {
       if (this.videoUrl.includes('.m3u8')) {
         if (Hls.isSupported()) {
           const hls = new Hls();
+          hls.loadSource(this.videoUrl);
           hls.attachMedia(video);
           hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-            hls.loadSource(this.videoUrl);
+            video.play();
           });
         } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
           video.src = this.videoUrl;
+          video.addEventListener("loadedmetadata",()=>{
+            video.play()
+          })
         } else {
           alert('M3U8 格式不受您的浏览器支持。');
           console.error('M3U8 格式不受您的浏览器支持。');

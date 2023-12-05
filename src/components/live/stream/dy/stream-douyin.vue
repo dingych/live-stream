@@ -4,7 +4,7 @@
     <div  :style="roomStyle">
       <stream-douyin-flv ref="flv"></stream-douyin-flv>
     </div>
-    <div style="width: 100%;height: 8vh;background-color:rgb(46 52 44)"></div>
+    <div style="width: 100%;height: 8vh;background-color:rgb(46 52 44);border-bottom-right-radius: 10px;border-bottom-left-radius: 10px"></div>
   </div>
 
 </template>

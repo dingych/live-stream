@@ -127,6 +127,8 @@ name: "barrage-douyin",
         case "WebcastChatMessage":
           //处理评论消息
           var chatMessage = protobuf.lookup("framework.ChatMessage");
+
+
           var res
           try{
             res = chatMessage.decode(new Uint8Array(Message.payload));
@@ -211,6 +213,7 @@ name: "barrage-douyin",
               rankScore: countUser.totalPvForAnchor,
               roomId:    countUser.common.roomId,
             }
+            console.log("房间信息:"+JSON.stringify(countMsg))
             this.roomInfo=countMsg
           }
           break
