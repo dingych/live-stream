@@ -1,18 +1,25 @@
 <template>
   <div >
     <div id="videoPlayer" style="display: flex;justify-content: center;">
-      <video controls style="width:56vw;height: 56vh;"></video>
+      <video controls :style="videoStyle"></video>
     </div>
   </div>
 </template>
 <script>
+import gkbgDark from "@/asserts/image/gkbgDark.png"
 export default {
   name: 'stream-douyin-flv',
   data() {
     return {
       flvPlayer: null,
       videoUrl:null,
-      lastDecodedFrame:""
+      lastDecodedFrame:"",
+      gkbgDark:gkbgDark,
+      videoStyle:{
+        width:"56vw",
+        height: "56vh",
+        backgroundImage: 'url('+gkbgDark+')'
+      }
     }
   },
   mounted() {

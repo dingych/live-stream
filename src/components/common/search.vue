@@ -7,6 +7,8 @@
              @click="dealUrl()">查询</button>
     <button v-show="!liveLock"  style="line-height:3.8vh;border-radius: 8px;opacity:0.8;margin-left:10px;background-color: rgb(201 62 165);width: 3vw"
             @click="continueUrl()">继续</button>
+<!--    <button  style="line-height:3.8vh;width: 5vw;border-radius: 8px;opacity:0.8;margin-left:10px;background-color: #b8c4c0"-->
+<!--            @click="continueUrl()">采集设置</button>-->
   </div>
 </template>
 
